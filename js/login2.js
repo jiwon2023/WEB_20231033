@@ -99,4 +99,4 @@ function logout(){
      location.href='../index.html';
 }
 
- document.getElementById("login_btn").addEventListener('click', check_input);
+ document.getElementById("logout_btn").addEventListener('click', logout);
