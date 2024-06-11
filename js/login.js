@@ -24,6 +24,7 @@ const check_xss = (input) => {
     // Sanitized된 값 반환
     return sanitizedInput;
     };
+
 const check_input = () => {
     const idsave_check = document.getElementById('idSaveCheck');
     const loginForm = document.getElementById('login_form');
@@ -34,6 +35,22 @@ const check_input = () => {
     alert(c);
     const emailValue = emailInput.value.trim();
     const passwordValue = passwordInput.value.trim();
+
+    if (emailValue === '') {
+        alert('이메일을 입력하세요.');
+        return false;
+        }
+
+    if (passwordValue === '') {
+        alert('비밀번호를 입력하세요.');
+        return false;
+        }
+
+    const sanitizedPassword =check_xss(passwordValue);
+// check_xss 함수로 비밀번호 Sanitize
+const sanitizedEmail = check_xss(emailValue);
+// check_xss 함수로 비밀번호 Sanitize
+
 
     if (emailValue.length < 5) {
         alert('아이디는 최소 5글자 이상 입력해야 합니다.');
@@ -54,10 +71,7 @@ const check_input = () => {
         alert('패스워드는 대소문자를 1개 이상 포함해야 합니다.');
         return false;
         }
-const sanitizedPassword =check_xss(passwordValue);
-// check_xss 함수로 비밀번호 Sanitize
-const sanitizedEmail = check_xss(emailValue);
-// check_xss 함수로 비밀번호 Sanitize
+
 if (!sanitizedEmail) {
 // Sanitize된 비밀번호 사용
 return false;
@@ -66,6 +80,7 @@ if (!sanitizedPassword) {
 // Sanitize된 비밀번호 사용
 return false;
 }
+
 if(idsave_check.checked == true) { // 아이디 체크 o
     alert("쿠키를 저장합니다.", emailValue);
     setCookie("id", emailValue, 1); // 1일 저장
@@ -80,7 +95,7 @@ if(idsave_check.checked == true) { // 아이디 체크 o
     console.log('비밀번호:', passwordValue);
     session_set(); // 세션 생성
     loginForm.submit();
-    };
+};
     
 
 function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
@@ -97,6 +112,6 @@ function init(){ // 로그인 폼에 쿠키에서 가져온 아이디 입력
 function logout(){
      session_del(); // 세션 삭제
      location.href='../index.html';
-}
+    }
 
- document.getElementById("login_btn").addEventListener('click', check_input);
+ document.getElementById("login_form").addEventListener('click', check_input);
